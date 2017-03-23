@@ -29,12 +29,35 @@ class Generate:
 
         return new_ticket
 
-    def sort_tickets(list):
+    def remove_mulitplier(list):
+        """If ticket has 7 numbers remove last number."""
+        list_mulities_removed = []
+        for ticket in list:
+            if len(ticket) == 7:
+                # print(ticket, len(ticket))
+                ticket.pop()
+                list_mulities_removed.append(ticket)
+        return list_mulities_removed
+
+    def sort_tickets(unsorted_tickets):
         """Sorts individual tickets numbers except the powerball number."""
+        sorted_tickets = []
+        for ticket in unsorted_tickets:
+            powerball = ticket.pop()
+            ticket.sort()
+            ticket.append(powerball)
+        return sorted_tickets
 
     """Used to test methods."""
     list = get_ticket_list('ticket_history.txt')
     list = remove_date(list)
+    list = remove_mulitplier(list)
+    print("unsorted")
+    for x in list:
+        print(x)
+
+    print("sorted")
+    list = sort_tickets(list)
     for x in list:
         print(x)
 
