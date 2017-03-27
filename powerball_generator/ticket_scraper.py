@@ -7,7 +7,7 @@ import requests
 class ticket_scraper:
     """Used to create text file with ticket history."""
 
-    def Get_ticket_history():
+    def Get_ticket_history(self):
         """gets ticket history."""
         r = requests.get("http://www.powerball.com/powerball/winnums-text.txt")
 

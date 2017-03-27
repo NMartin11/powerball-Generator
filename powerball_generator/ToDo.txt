@@ -1,2 +1,3 @@
 TODO:
-1. Fix sorted_tickets methods  ->   doesn't sort or print, seems to be null
+1. Make method that randomly generates tickets between 0 - 99 then compares to sorted tickets
+

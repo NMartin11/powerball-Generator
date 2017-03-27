@@ -44,9 +44,22 @@ class Generate:
         sorted_tickets = []
         for ticket in unsorted_tickets:
             powerball = ticket.pop()
-            ticket.sort()
+            ticket = sorted(ticket)
             ticket.append(powerball)
-        return sorted_tickets
+            sorted_tickets.append(ticket)
+
+        """Writes to file with all sorted tickets"""
+        file = open('all_sorted_tickets.txt', 'w')
+        file.seek(0)
+        file.truncate()
+
+        file.write('\n'.join(str(line) for line in sorted_tickets))
+
+
+    # def create_unique_ticket(self):
+
+
+
 
     """Used to test methods."""
     list = get_ticket_list('ticket_history.txt')
@@ -61,6 +74,3 @@ class Generate:
     for x in list:
         print(x)
 
-# if __name__ == "__main__":
-#     """Execute only if run as a script."""
-#     print(get_ticket_list('ticket_history.txt'))
