@@ -1,4 +1,5 @@
 """Class for generating ticket."""
+import random
 
 
 class Generate:
@@ -56,9 +57,17 @@ class Generate:
         file.write('\n'.join(str(line) for line in sorted_tickets))
 
 
-    # def create_unique_ticket(self):
-
-
+    def create_unique_ticket(self):
+        unique_ticket = []
+        while false:
+            for x in range(6):
+                number = random.randint(0, 99)
+                if number in unique_ticket:
+                    continue
+                else:
+                    unique_ticket.append(number)
+            # check if unique_ticket is in all_sorted_tickets txt
+            # if it is then go through while loop again else break
 
 
     """Used to test methods."""
@@ -73,4 +82,3 @@ class Generate:
     list = sort_tickets(list)
     for x in list:
         print(x)
-
