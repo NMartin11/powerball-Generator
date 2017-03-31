@@ -1,7 +1,8 @@
 """Class for generating ticket."""
+import random
 
 
-class Generate:
+class Generate(object):
     """methods to generate ticket."""
 
     def get_ticket_list(file):
@@ -56,21 +57,30 @@ class Generate:
         file.write('\n'.join(str(line) for line in sorted_tickets))
 
 
-    # def create_unique_ticket(self):
+    def create_unique_ticket(self):
+        unique_ticket = random.sample(range(100), 7)
+        powerball = unique_ticket.pop()
+        sorted(unique_ticket)
+        unique_ticket.append(powerball)
+
+        file = open('all_sorted_tickets.txt', 'r')
+
+        while False:
+            for line in file:
+                if line == unique_ticket:
+                    unique_ticket = random.sample(range(100), 7)
+                    powerball = unique_ticket.pop()
+                    sorted(unique_ticket)
+                    unique_ticket.append(powerball)
+                else:
+                    True
+
+        return unique_ticket
 
 
-
-
+if __name__ == '__main__':
     """Used to test methods."""
-    list = get_ticket_list('ticket_history.txt')
-    list = remove_date(list)
-    list = remove_mulitplier(list)
-    print("unsorted")
-    for x in list:
-        print(x)
-
-    print("sorted")
-    list = sort_tickets(list)
-    for x in list:
-        print(x)
+    Ticket_gen = Generate()
+    list = Ticket_gen.create_unique_ticket #TODO This is not working for some stupid fucking reason
+    print(list)
 
