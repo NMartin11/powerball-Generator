@@ -59,15 +59,20 @@ class Generate:
 
     def create_unique_ticket(self):
         unique_ticket = []
-        while false:
-            for x in range(6):
-                number = random.randint(0, 99)
-                if number in unique_ticket:
-                    continue
-                else:
-                    unique_ticket.append(number)
-            # check if unique_ticket is in all_sorted_tickets txt
-            # if it is then go through while loop again else break
+        for x in range(6):
+            number = random.randint(0, 99)
+            if number in unique_ticket:
+                continue
+            else:
+                unique_ticket.append(number)
+
+    def check_if_unique(self, ticket):
+        sorted_file = open('all_sorted_tickets', 'r')
+        for line in sorted_file:
+            if line == ticket:
+                return false
+
+
 
 
     """Used to test methods."""
