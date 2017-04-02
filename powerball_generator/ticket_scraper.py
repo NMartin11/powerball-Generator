@@ -7,6 +7,9 @@ import requests
 class ticket_scraper:
     """Used to create text file with ticket history."""
 
+    #TODO Bring remove date and sort methods to this class
+    #   can get history, remove date, mulitipliers and sort in one class.
+
     def Get_ticket_history(self):
         """gets ticket history."""
         r = requests.get("http://www.powerball.com/powerball/winnums-text.txt")
@@ -22,6 +25,18 @@ class ticket_scraper:
         ticket_file.seek(0)
         ticket_file.truncate()
 
-        ticket_file.write(str(ticket_text))
+        lines = enumerate(ticket_text.split("\n"))
+        for i, line in enumerate(lines):
+            if i is 0:
+                print("Didn't print first line")
+            else:
+                ticket = line[1]
+                ticket_file.write(str(f"{ticket}"))
 
         ticket_file.close()
+
+
+if __name__ == '__main__':
+    """Used to test methods."""
+    Scraper = ticket_scraper()
+    Scraper.Get_ticket_history()

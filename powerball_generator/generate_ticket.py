@@ -5,19 +5,18 @@ import random
 class Generate(object):
     """methods to generate ticket."""
 
-    def get_ticket_list(file):
+    def get_ticket_list(self, file):
         """Get ticket as list."""
         array = []
         with open(file) as f:
             for i, line in enumerate(f):
-                if i > 0 and i < 10:
-                    current_line = line.split(" ", 1)
-                    line = ''.join(current_line)
-                    line = line.strip('\r\n')
-                    array.append(line)
+                current_line = line.split(" ", 1)
+                line = ''.join(current_line)
+                line = line.strip('\r\n')
+                array.append(line)
         return array
 
-    def remove_date(list):
+    def remove_date(self, list):
         """Remove date from list."""
         new_ticket = []
         for ticket in list:
@@ -30,7 +29,7 @@ class Generate(object):
 
         return new_ticket
 
-    def remove_mulitplier(list):
+    def remove_mulitplier(self, list):
         """If ticket has 7 numbers remove last number."""
         list_mulities_removed = []
         for ticket in list:
@@ -40,7 +39,7 @@ class Generate(object):
                 list_mulities_removed.append(ticket)
         return list_mulities_removed
 
-    def sort_tickets(unsorted_tickets):
+    def sort_tickets(self, unsorted_tickets):
         """Sorts individual tickets numbers except the powerball number."""
         sorted_tickets = []
         for ticket in unsorted_tickets:
@@ -60,27 +59,32 @@ class Generate(object):
     def create_unique_ticket(self):
         unique_ticket = random.sample(range(100), 7)
         powerball = unique_ticket.pop()
-        sorted(unique_ticket)
+        unique_ticket.sort()
         unique_ticket.append(powerball)
 
         file = open('all_sorted_tickets.txt', 'r')
+        for line in file:
+            if line == unique_ticket:
+                unique_ticket = random.sample(range(100), 7)
+                powerball = unique_ticket.pop()
+                print("powerball: ", powerball)
+                sorted(unique_ticket)
+                unique_ticket.append(powerball)
 
-        while False:
-            for line in file:
-                if line == unique_ticket:
-                    unique_ticket = random.sample(range(100), 7)
-                    powerball = unique_ticket.pop()
-                    sorted(unique_ticket)
-                    unique_ticket.append(powerball)
-                else:
-                    True
+        file.close()
 
         return unique_ticket
 
 
 if __name__ == '__main__':
     """Used to test methods."""
-    Ticket_gen = Generate()
-    list = Ticket_gen.create_unique_ticket #TODO This is not working for some stupid fucking reason
-    print(list)
+    generate = Generate()
+    ticket_history = generate.get_ticket_list("ticket_history.txt")
+    ticket_history = generate.remove_date(ticket_history)
+    ticket_history = generate.remove_mulitplier(ticket_history)
+
+    generate.sort_tickets(ticket_history)
+
+    unigue_ticket = generate.create_unique_ticket()
+    print(unigue_ticket)
 
