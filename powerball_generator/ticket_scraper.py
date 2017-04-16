@@ -12,15 +12,11 @@ class ticket_scraper:
     def Get_ticket_history(self):
         """Gets ticket history."""
         r = requests.get("http://www.powerball.com/powerball/winnums-text.txt")
-
         data = r.text
-
         soup = BeautifulSoup(data, "html.parser")
 
         ticket_text = soup.get_text()
-
         ticket_file = open('ticket_history.txt', 'w')
-
         ticket_file.seek(0)
         ticket_file.truncate()
 
@@ -30,48 +26,45 @@ class ticket_scraper:
                 print("Didn't print first line")
             else:
                 ticket = line[1]
-                ticket_file.write(str(ticket))
+                ticket_without_date = self.remove_date(ticket)
+                ticket_without_multiplier = self.remove_mulitplier(ticket_without_date)
+                ticket_sorted = self.sort_tickets(ticket_without_multiplier)
+                ticket_file.write(f"{ticket}")
 
         ticket_file.close()
 
-    def remove_date(self, list):
-        """Remove date from list."""
-        new_ticket = []
-        for ticket in list:
-            my_list = ticket.split("  ")  # Split ticket to isolate date
-            date_index = my_list[0].split(" ")  # Splits first num from date
-            del date_index[0]  # Delete date from first num
+    def remove_date(self, ticket):
+        """Remove date from ticket."""
+        list = ticket.split("  ")
+        del list[0]
 
-            my_list[0] = date_index[0]  # Replace first num without date
-            new_ticket.append(my_list)
+        return list
 
-        return new_ticket
-
-    def remove_mulitplier(self, list):
+    def remove_mulitplier(self, ticket):
         """If ticket has 7 numbers remove last number."""
-        list_mulities_removed = []
-        for ticket in list:
-            if len(ticket) == 7:
-                # print(ticket, len(ticket))
-                ticket.pop()
-                list_mulities_removed.append(ticket)
-        return list_mulities_removed
+        if len(ticket) == 7:
+            # print(ticket, len(ticket))
+            ticket.pop()
+        return ticket
 
-    def sort_tickets(self, unsorted_tickets):
+    def sort_tickets(self, ticket):
         """Sorts individual tickets numbers except the powerball number."""
-        sorted_tickets = []
-        for ticket in unsorted_tickets:
-            powerball = ticket.pop()
-            ticket = sorted(ticket)
-            ticket.append(powerball)
-            sorted_tickets.append(ticket)
+        sorted_ticket = []
+        for i in ticket:
+            i.replace(" ", "")
+            print(i)
+            sorted_ticket.append(i)
+        # print(f"Ticket without powerball: {sorted_ticket}")
+        if len(sorted_ticket) != 0:
+            # powerball = sorted_ticket.pop()
+            # sorted_ticket = sorted_ticket.sort()
+            # sorted_ticket = sorted_ticket.split(" ")
+            #
+            # sorted_ticket.append(powerball)
+            #TODO: sorted_ticket is nonetype: figure it out dumbass!!!
 
-        """Writes to file with all sorted tickets"""
-        file = open('all_sorted_tickets.txt', 'w')
-        file.seek(0)
-        file.truncate()
+        return ticket
 
-        file.write('\n'.join(str(line) for line in sorted_tickets))
 
 if __name__ == '__main__':
     """Used to test methods."""
