@@ -28,8 +28,8 @@ class ticket_scraper:
                 ticket = line[1]
                 ticket_without_date = self.remove_date(ticket)
                 ticket_without_multiplier = self.remove_mulitplier(ticket_without_date)
-                ticket_sorted = self.sort_tickets(ticket_without_multiplier)
-                ticket_file.write(f"{ticket}")
+                ticket_sorted = self.sort_tickets(ticket_without_multiplier) # TODO: fails on the split
+                ticket_file.write(f"{ticket_sorted}\n")
 
         ticket_file.close()
 
@@ -49,21 +49,17 @@ class ticket_scraper:
 
     def sort_tickets(self, ticket):
         """Sorts individual tickets numbers except the powerball number."""
+        print(f"ticket: {ticket}")
         sorted_ticket = []
-        for i in ticket:
-            i.replace(" ", "")
-            print(i)
-            sorted_ticket.append(i)
-        # print(f"Ticket without powerball: {sorted_ticket}")
-        if len(sorted_ticket) != 0:
-            # powerball = sorted_ticket.pop()
-            # sorted_ticket = sorted_ticket.sort()
-            # sorted_ticket = sorted_ticket.split(" ")
-            #
-            # sorted_ticket.append(powerball)
+        if len(ticket) != 0:
+            powerball = ticket.pop()
+            ticket.sort()
+            sorted_ticket = list(ticket)
+            # sorted_ticket.split(" ") # TODO: can't split on nonetype
+            sorted_ticket.append(powerball)
             #TODO: sorted_ticket is nonetype: figure it out dumbass!!!
 
-        return ticket
+        return sorted_ticket
 
 
 if __name__ == '__main__':
