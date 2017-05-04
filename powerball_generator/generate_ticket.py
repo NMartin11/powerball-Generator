@@ -5,10 +5,10 @@ import random
 class Generate(object):
     """methods to generate ticket."""
 
-    def get_ticket_list(self, file):
+    def get_ticket_list(self, file_name):
         """Get ticket as list."""
         array = []
-        with open(file) as f:
+        with open(file_name, 'r') as f:
             for i, line in enumerate(f):
                 current_line = line.split(" ", 1)
                 line = ''.join(current_line)
@@ -30,7 +30,7 @@ class Generate(object):
         sorted_file = open('all_sorted_tickets', 'r')
         for line in sorted_file:
             if line == ticket:
-                return false
+                return False
         unique_ticket = random.sample(range(100), 7)
         powerball = unique_ticket.pop()
         unique_ticket.sort()
@@ -52,23 +52,21 @@ class Generate(object):
 
 if __name__ == '__main__':
     """Used to test methods."""
-    list = Generate.get_ticket_list('ticket_history.txt')
-    list = Generate.remove_date(list)
-    list = Generate.remove_mulitplier(list)
-    print("unsorted")
-    for x in list:
-        print(x)
+    """"
+        1. get ticket history ( should already be sorted, multiplier removed, and date removed )
+        2. create ticket
+        3. check if unique against the ticket history file
+        4. if unique print
+            else repeat step 2 and 3
 
-    print("sorted")
-    list = Generate.sort_tickets(list)
-    for x in list:
-        print(x)
-    generate = Generate()
-    ticket_history = generate.get_ticket_list("ticket_history.txt")
-    ticket_history = generate.remove_date(ticket_history)
-    ticket_history = generate.remove_mulitplier(ticket_history)
 
-    generate.sort_tickets(ticket_history)
+    """
+    generator= Generate()
+    ticket_history = generator.get_ticket_list("ticket_history.txt")
+    ticket_history = generator.remove_date(ticket_history)
+    ticket_history = generator.remove_mulitplier(ticket_history)
 
-    unigue_ticket = generate.create_unique_ticket()
+    generator.sort_tickets(ticket_history)
+
+    unigue_ticket = generator.create_unique_ticket()
     print(unigue_ticket)
