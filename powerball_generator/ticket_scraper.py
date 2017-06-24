@@ -5,9 +5,8 @@ import requests
 
 class ticket_scraper:
     """Used to create text file with ticket history."""
-
-    #   TODO Bring remove date and sort methods to this class
-    #   can get history, remove date, mulitipliers and sort in one class.
+    def __init__(self):
+        self.sorted_list = []
 
     def Get_ticket_history(self):
         """Gets ticket history."""
@@ -55,9 +54,7 @@ class ticket_scraper:
             powerball = ticket.pop()
             ticket.sort()
             sorted_ticket = list(ticket)
-            # sorted_ticket.split(" ") # TODO: can't split on nonetype
             sorted_ticket.append(powerball)
-            #TODO: sorted_ticket is nonetype: figure it out dumbass!!!
 
         return sorted_ticket
 
@@ -73,3 +70,4 @@ if __name__ == '__main__':
     """
     Scraper = ticket_scraper()
     Scraper.Get_ticket_history()
+

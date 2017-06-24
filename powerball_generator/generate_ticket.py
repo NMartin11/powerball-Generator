@@ -5,6 +5,18 @@ import random
 class Generate(object):
     """methods to generate ticket."""
 
+    def sort_tickets(self, ticket):
+        """Sorts individual tickets numbers except the powerball number."""
+        print(f"ticket: {ticket}")
+        sorted_ticket = []
+        if len(ticket) != 0:
+            powerball = ticket.pop()
+            ticket.sort()
+            sorted_ticket = list(ticket)
+            sorted_ticket.append(powerball)
+
+        return sorted_ticket
+
     def get_ticket_list(self, file_name):
         """Get ticket as list."""
         array = []
@@ -19,35 +31,40 @@ class Generate(object):
     def create_unique_ticket(self):
         """Creates a unique ticket that isn't in history.txt"""
         unique_ticket = []
-        for x in range(6):
-            number = random.randint(0, 99)
-            if number in unique_ticket:
-                continue
-            else:
-                unique_ticket.append(number)
+        for x in range(5):
+            number = random.randint(1, 69)
+            while number in unique_ticket:
+                number = random.randint(1, 69)
+            unique_ticket.append(number)
 
-    def check_if_unique(self, ticket):
-        sorted_file = open('all_sorted_tickets', 'r')
-        for line in sorted_file:
-            if line == ticket:
-                return False
-        unique_ticket = random.sample(range(100), 7)
-        powerball = unique_ticket.pop()
-        unique_ticket.sort()
+        powerball =  random.randint(1, 45)
+        while powerball in unique_ticket:
+            powerball =  random.randint(1, 45)
+
         unique_ticket.append(powerball)
+        return unique_ticket
 
-        file = open('all_sorted_tickets.txt', 'r')
+    def check_if_unique(self, unique_ticket):
+        is_unique = True
+
+        file = open('ticket_history.txt', 'r')
         for line in file:
-            if line == unique_ticket:
-                unique_ticket = random.sample(range(100), 7)
-                powerball = unique_ticket.pop()
-                print("powerball: ", powerball)
-                sorted(unique_ticket)
-                unique_ticket.append(powerball)
+            unique_ticket = self.sort_tickets(unique_ticket)
+            if unique_ticket == line:
+                is_unique = False
+                return is_unique #return false
+            else:
+                continue
+            # if line == unique_ticket:
+            #     new_ticket = random.sample(range(70), 6)
+            #     powerball = random.sample(range(46), 1)
+            #     print("powerball: ", powerball)
+            #     sorted(new_ticket)
+            #     new_ticket.append(powerball)
 
         file.close()
 
-        return unique_ticket
+        return is_unique #return true
 
 
 if __name__ == '__main__':
@@ -63,10 +80,23 @@ if __name__ == '__main__':
     """
     generator= Generate()
     ticket_history = generator.get_ticket_list("ticket_history.txt")
-    ticket_history = generator.remove_date(ticket_history)
-    ticket_history = generator.remove_mulitplier(ticket_history)
+    # ticket_history = generator.remove_date(ticket_history)
+    # ticket_history = generator.remove_mulitplier(ticket_history)
 
-    generator.sort_tickets(ticket_history)
+    # generator.sort_tickets(ticket_history)
 
-    unigue_ticket = generator.create_unique_ticket()
-    print(unigue_ticket)
+    unique_ticket = generator.create_unique_ticket()
+    #TODO: ticket only coming back with 5 numbers, fix it you moron!
+    if generator.check_if_unique(unique_ticket):
+        print(f"Unique ticket {unique_ticket}")
+    else:
+        print("ticket wasn't unique")
+
+
+
+
+
+
+
+
+
