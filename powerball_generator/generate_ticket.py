@@ -7,7 +7,6 @@ class Generate(object):
 
     def sort_tickets(self, ticket):
         """Sorts individual tickets numbers except the powerball number."""
-        print(f"ticket: {ticket}")
         sorted_ticket = []
         if len(ticket) != 0:
             powerball = ticket.pop()
@@ -37,7 +36,7 @@ class Generate(object):
                 number = random.randint(1, 69)
             unique_ticket.append(number)
 
-        powerball =  random.randint(1, 45)
+        powerball = random.randint(1, 45)
         while powerball in unique_ticket:
             powerball =  random.randint(1, 45)
 
@@ -46,11 +45,12 @@ class Generate(object):
 
     def check_if_unique(self, unique_ticket):
         is_unique = True
-
+        check_ticket = list(unique_ticket)
         file = open('ticket_history.txt', 'r')
         for line in file:
-            unique_ticket = self.sort_tickets(unique_ticket)
-            if unique_ticket == line:
+            print(line)
+            check_ticket = self.sort_tickets(check_ticket)
+            if check_ticket == line:
                 is_unique = False
                 return is_unique #return false
             else:
