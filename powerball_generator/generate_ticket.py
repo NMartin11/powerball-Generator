@@ -86,7 +86,6 @@ if __name__ == '__main__':
     # generator.sort_tickets(ticket_history)
 
     unique_ticket = generator.create_unique_ticket()
-    #TODO: ticket only coming back with 5 numbers, fix it you moron!
     if generator.check_if_unique(unique_ticket):
         print(f"Unique ticket {unique_ticket}")
     else:

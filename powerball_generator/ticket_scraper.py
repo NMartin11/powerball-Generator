@@ -27,7 +27,7 @@ class ticket_scraper:
                 ticket = line[1]
                 ticket_without_date = self.remove_date(ticket)
                 ticket_without_multiplier = self.remove_mulitplier(ticket_without_date)
-                ticket_sorted = self.sort_tickets(ticket_without_multiplier) # TODO: fails on the split
+                ticket_sorted = self.sort_tickets(ticket_without_multiplier)
                 ticket_file.write(f"{ticket_sorted}\n")
 
         ticket_file.close()
